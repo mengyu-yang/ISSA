@@ -34,24 +34,40 @@ Training on CelebA:
 where `{dataset_dir}` is the folder where you saved the datasets and `{output_dir}` is the folder where you want to save weights and results to. The rest of the hyperparameters, specified using argparse arguments, are set to default values used within the paper. 
 
 
-### FID experiment
-Omniglot 
-* bash omni_fid.sh 1 omni_fid
+### FID Experiment
+Omniglot:
+> bash omni_fid.sh 1 omni_fid
 
-CelebA
-* bash celeba_fid.sh 1 celeba_fid
+CelebA:
+> bash celeba_fid.sh 1 celeba_fid
 
-### identity accuracy experiment
-1. Omniglot, train the classifier first 
-* train the classifier by using train_classifier() in omni_accuracy.py
-* bash omni_accuracy.sh 1 omni_accuracy
+### Identity Accuracy Experiment
+Omniglot:
+* Train the classifier first by using train_classifier() in `omni_accuracy.py`
+> bash omni_accuracy.sh 1 omni_accuracy
 
-2. CelebA, obtain pre-trained face classifier from https://github.com/deepinsight/insightface
-* bash celeba_accuracy.sh 1 celeba_accuracy
+CelebA, obtain pre-trained face classifier from https://github.com/deepinsight/insightface
+> bash celeba_accuracy.sh 1 celeba_accuracy
 
 
 ## ISSA_experimental 
 
 This folder uses the codebase from the [official PyTorch implementation of StyleGAN2-ADA](https://github.com/NVlabs/stylegan2-ada-pytorch). Changes are made to convert it to the ISSA training procedure. 
 
+### Environment Setup 
 
+`stylegan2.yml` lists the dependencies I used. There may be some additional packages in there that may not be required. Based off the official conda cheatsheet, you can create an environmental from this file using
+
+> conda env create --file stylegan2.yml 
+
+### Data 
+
+The experimental model has been mainly tested on the CelebA dataset. To prepare the data, first download the raw dataset. You should get a folder with all the CelebA images in it (no subfolders). Use `dataset_tool.py` to process the images. Documentation can be found in the official repo linked above. As an example, the command I used is
+
+> python dataset_tool.py --source {dir_to_raw_dataset} --dest {dataset_name}.zip --width 64 --height 64
+
+Note that within `dataset_tool.py`, on line 61, I hardcoded the location of the CelebA json file that the code required to assign labels to each image. The original code didn't seem to work and some changes have been made to make it accomodate labeled data. Take a look at `celeba_train.json` to see what the required format is like. 
+
+### Training 
+
+There are 2 bash `.sh` files that are used to run and train the models. `run_NABirds_baseline.sh` runs a mostly baseline version of ISSA implemented on StyleGAN2 modules. `run_NABirds_iae.sh` has the additional feature of being able to swap in different loss functions and modules (either DCGAN or StyleGAN2) for the encoder, generator, and discriminator. The full list of training parameters can be found as click options in `train.py` and `train_issa_swap.py`.  
