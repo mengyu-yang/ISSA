@@ -1,5 +1,7 @@
 This repo consists of two folders. `ISSA` contains the official implementation for the NeurIPS 2021 Workshop on Meta-Learning paper **[Few Shot Image Generation via Implicit Autoencoding of Support Sets](https://openreview.net/pdf?id=fem00ckyS8t)**. `ISSA_experimental` contains code for an extended ISSA model outside of the paper. Here, we experiment with a StyleGAN2-based ISSA rather than a DCGAN-based one. 
 
+If you have any questions, feel free to contact the corresponding author: shenyang.huang@mail.mcgill.ca
+
 ## ISSA
 
 ### Set up Environment
